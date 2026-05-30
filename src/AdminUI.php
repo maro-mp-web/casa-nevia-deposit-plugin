@@ -26,6 +26,7 @@ class AdminUI {
         $status    = get_post_meta( $post->ID, '_mpcdp_deposit_status', true );
         $intent_id = get_post_meta( $post->ID, '_mpcdp_deposit_intent_id', true );
         $captured  = get_post_meta( $post->ID, '_mpcdp_deposit_captured_amount', true );
+        $error     = get_post_meta( $post->ID, '_mpcdp_deposit_error', true );
         
         $nonce = wp_create_nonce( 'mpcdp_deposit_action' );
         
@@ -35,7 +36,12 @@ class AdminUI {
         
         if ( ! $status ) {
             echo '<p><strong>Status:</strong> Nije zamrznuto</p>';
-            echo '<p class="description">Polog će biti automatski zamrznut na dan dolaska gosta.</p>';
+            if ( $error ) {
+                echo '<p style="color:red; font-weight:bold;">Greška pri zamrzavanju: ' . esc_html( $error ) . '</p>';
+                echo '<p class="description">Pokušaj naplate automatskog pologa nije uspio. Provjerite u Stripe nadzornoj ploči za više detalja.</p>';
+            } else {
+                echo '<p class="description">Polog će biti automatski zamrznut na dan dolaska gosta.</p>';
+            }
         } elseif ( $status === 'frozen' ) {
             echo '<p><strong>Status:</strong> <span style="color:orange; font-weight:bold;">ZAMRZNUT (' . ( MPCDP_DEPOSIT_AMOUNT / 100 ) . '€)</span></p>';
             echo '<p><small>Intent ID: ' . esc_html( $intent_id ) . '</small></p>';
