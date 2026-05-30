@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Casa Nevia - MotoPress Custom Deposit Payment
- * Description: Modifies MotoPress Stripe integration to save cards and handles 400€ damage deposits via WP Cron.
+ * Description: Custom deposit management for Casa Nevia.
  * Version: 1.0.0
  * Author: Maro
  * Text Domain: motopress-custom-depozit-payment
